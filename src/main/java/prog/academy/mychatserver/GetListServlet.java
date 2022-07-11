@@ -1,12 +1,10 @@
 package prog.academy.mychatserver;
 
-import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 @WebServlet(name = "GetListServlet", value = "/get")

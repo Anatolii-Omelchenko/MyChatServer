@@ -25,11 +25,13 @@ public class UsersList {
     }
 
     public synchronized void checkOnline() {
-        long inactivity = 60000;
+        long inactivity = 600000; //10 minutes
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
             User user = entry.getValue();
-            if (!user.getStatus().equals("offline")) {
+            if (user.getStatus().equals("offline")) {
+                continue;
+            } else {
                 if (inactivity < (new Date().getTime() - user.getLastActivity().getTime())) {
                     user.setStatus("waiting");
                 }
@@ -45,7 +47,4 @@ public class UsersList {
         return users;
     }
 
-    public void setUsers(Map<String, User> users) {
-        this.users = users;
-    }
 }
