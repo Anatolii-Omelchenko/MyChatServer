@@ -1,7 +1,5 @@
 package prog.academy.mychatserver;
 
-import com.google.gson.JsonElement;
-
 import java.util.ArrayList;
 import java.util.List;
 

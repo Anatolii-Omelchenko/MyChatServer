@@ -3,16 +3,14 @@ package prog.academy.mychatserver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class UsersList {
 
     private static final UsersList usersList = new UsersList();
 
     private Gson gson;
-    private List<User> users = new ArrayList<>();
+    private Map<String, User> users = new HashMap<>();
 
     private UsersList() {
         gson = new GsonBuilder().create();
@@ -22,24 +20,32 @@ public class UsersList {
         return usersList;
     }
 
-    public synchronized void add(User user) {
-        users.add(user);
+    public synchronized void add(String login, User user) {
+        users.put(login, user);
     }
 
     public synchronized void checkOnline() {
-        Date currentDate = new Date();
         long inactivity = 60000;
 
-        for (User user : users) {
+        for (Map.Entry<String, User> entry : users.entrySet()) {
+            User user = entry.getValue();
             if (!user.getStatus().equals("offline")) {
-                if (inactivity < (user.getLastActivity().getTime() - currentDate.getTime())) {
+                if (inactivity < (new Date().getTime() - user.getLastActivity().getTime())) {
                     user.setStatus("waiting");
                 }
             }
         }
     }
 
-    public synchronized String toJSON(){
-       return gson.toJson(users);
+    public synchronized String toJSON() {
+        return gson.toJson(new JsonUsers(users));
+    }
+
+    public Map<String, User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Map<String, User> users) {
+        this.users = users;
     }
 }

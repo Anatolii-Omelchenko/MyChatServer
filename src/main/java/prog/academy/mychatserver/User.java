@@ -6,10 +6,11 @@ import java.util.Objects;
 public class User {
     String login;
     Date lastActivity = new Date();
-    String status = "online";
+    String status;
 
-    public User(String login) {
+    public User(String login, String status) {
         this.login = login;
+        this.status = status;
     }
 
     public String getLogin() {

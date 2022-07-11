@@ -8,23 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet(name = "AddServlet", value = "/add")
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserStatusServlet", value = "/update")
+public class UpdateUserStatusServlet extends HttpServlet {
 
-    private MessageList msgList = MessageList.getInstance();
+    UsersList usersList = UsersList.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         byte[] buff = requestBodyToArray(request);
-        String buffString = new String(buff, StandardCharsets.UTF_8);
+        String login = new String(buff, StandardCharsets.UTF_8);
 
-        Message msg = Message.fromJSON(buffString);
-        if (msg != null) {
-            msgList.add(msg);
-        } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
+        usersList.add(login, new User(login, "online"));
+
     }
 
     private byte[] requestBodyToArray(HttpServletRequest request) throws IOException {

@@ -13,14 +13,12 @@ import java.nio.charset.StandardCharsets;
 public class GetListServlet extends HttpServlet {
 
     private MessageList msgList = MessageList.getInstance();
-    private UsersList usersList = UsersList.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String fromStr = request.getParameter("from");
         String login = request.getParameter("login");
         int from = 0;
-        usersList.add(new User(login));
 
         try {
             from = Integer.parseInt(fromStr);

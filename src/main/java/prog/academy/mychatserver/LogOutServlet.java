@@ -1,30 +1,27 @@
 package prog.academy.mychatserver;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet(name = "AddServlet", value = "/add")
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "LogOutServlet", value = "/logout")
+public class LogOutServlet extends HttpServlet {
 
-    private MessageList msgList = MessageList.getInstance();
+    UsersList usersList = UsersList.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         byte[] buff = requestBodyToArray(request);
-        String buffString = new String(buff, StandardCharsets.UTF_8);
+        String login = new String(buff, StandardCharsets.UTF_8);
 
-        Message msg = Message.fromJSON(buffString);
-        if (msg != null) {
-            msgList.add(msg);
-        } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
+        usersList.getUsers().put(login, new User(login,"offline"));
     }
 
     private byte[] requestBodyToArray(HttpServletRequest request) throws IOException {
@@ -33,10 +30,10 @@ public class AddServlet extends HttpServlet {
         byte[] buff = new byte[1024];
         int r;
 
-        do{
+        do {
             r = is.read(buff);
-            if(r>0){
-                bos.write(buff,0, r);
+            if (r > 0) {
+                bos.write(buff, 0, r);
             }
         } while (r != -1);
 
