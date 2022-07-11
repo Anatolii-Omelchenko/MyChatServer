@@ -17,7 +17,7 @@ public class GetListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String fromStr = request.getParameter("from");
-        String to = request.getParameter("to");
+        String to = request.getParameter("login");
         int from = 0;
 
         try {
