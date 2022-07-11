@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Chat server</title>
+        <meta content="text/html; charset=utf-8"/>
     </head>
     <body>
-
+        <h1 style="color: blue">Server running...</h1>
     </body>
 </html>
