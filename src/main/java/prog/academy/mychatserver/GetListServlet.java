@@ -13,12 +13,14 @@ import java.nio.charset.StandardCharsets;
 public class GetListServlet extends HttpServlet {
 
     private MessageList msgList = MessageList.getInstance();
+    private UsersList usersList = UsersList.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String fromStr = request.getParameter("from");
-        String to = request.getParameter("login");
+        String login = request.getParameter("login");
         int from = 0;
+        usersList.add(new User(login));
 
         try {
             from = Integer.parseInt(fromStr);
@@ -32,7 +34,7 @@ public class GetListServlet extends HttpServlet {
 
         response.setContentType("application/json");
 
-        String json = msgList.toJSON(from, to);
+        String json = msgList.toJSON(from, login);
         if(json != null){
             OutputStream os = response.getOutputStream();
             byte[] buff = json.getBytes(StandardCharsets.UTF_8);
